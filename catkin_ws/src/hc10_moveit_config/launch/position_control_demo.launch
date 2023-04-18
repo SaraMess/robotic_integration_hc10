@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="hc10_move_arm" pkg="hc10_moveit_config" type="hc10_move_arm.py" respawn="false" output="screen">
+  </node>
+
+</launch>

@@ -22,6 +22,11 @@
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)"
     respawn="false" output="screen" />
 
+<!-- send table urdf to param server -->  
+  <param name="box_description" command="xacro  '$(find motoman_hc10_support)/urdf/box.xacro'" />
+  <!-- push table_description to factory and spawn robot in gazebo -->
+  <node name="spawn_box" pkg="gazebo_ros" type="spawn_model" args="-urdf -param box_description -x 0.63 -y -0.20 -z 0.12 -model box_model" respawn="false" output="screen" />
+    
   <!-- Load joint controller parameters for Gazebo -->
   <rosparam file="$(find hc10_moveit_config)/config/gazebo_controllers.yaml" />
   <!-- Spawn Gazebo ROS controllers -->

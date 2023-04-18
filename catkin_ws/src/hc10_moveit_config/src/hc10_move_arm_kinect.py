@@ -164,6 +164,7 @@ class MoveGroupPythonInterfaceTutorial(object):
 
         # Misc variables
         self.box_name = ""
+        self.box_names = []
         self.robot = robot
         self.scene = scene
         self.move_group = move_group
@@ -186,9 +187,7 @@ class MoveGroupPythonInterfaceTutorial(object):
         ## thing we want to do is move it to a slightly better configuration.
         ## We use the constant `tau = 2*pi <https://en.wikipedia.org/wiki/Turn_(angle)#Tau_proposals>`_ for convenience:
         # We get the joint values from the group and change some of the values:
-        print("goal_joint", move_group.get_current_joint_values())
         joint_goal = move_group.get_current_joint_values()
-        
         joint_goal[0] = 0
         joint_goal[1] = 0#-tau / 8
         joint_goal[2] = 0
@@ -403,7 +402,39 @@ class MoveGroupPythonInterfaceTutorial(object):
         # Copy local variables back to class variables. In practice, you should use the class
         # variables directly unless you have a good reason not to.
         self.box_name = box_name
+
+        return self.wait_for_state_update(box_is_known=True, timeout=timeout) 
+
+    def add_box(self, orientation_w, position, frame= "world", name="box", size=(0.2, 0.2, 0.2), timeout=4):
+
+        # Copy class variables to local variables to make the web tutorials more clear.
+        # In practice, you should use the class variables directly unless you have a good
+        # reason not to.
+        box_name = self.box_name
+        scene = self.scene
+
+        ## BEGIN_SUB_TUTORIAL add_box
+        ##
+        ## Adding Objects to the Planning Scene
+        ## ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ## First, we will create a box in the planning scene between the fingers:
+        box_pose = geometry_msgs.msg.PoseStamped()
+        box_pose.header.frame_id = frame
+        box_pose.pose.orientation.w =  orientation_w
+        box_pose.pose.position.x = position[0]  # above the hc10_hand frame
+        box_pose.pose.position.y = position[1] # above the hc10_hand frame
+        box_pose.pose.position.z = position[2] # above the hc10_hand frame
+        box_name = name
+        self.box_names.append(name)
+        scene.add_box(box_name, box_pose, size=size)
+
+        ## END_SUB_TUTORIAL
+        # Copy local variables back to class variables. In practice, you should use the class
+        # variables directly unless you have a good reason not to.
+        self.box_name = box_name
+
         return self.wait_for_state_update(box_is_known=True, timeout=timeout)
+    
 
     def attach_box(self, timeout=4):
         # Copy class variables to local variables to make the web tutorials more clear.
@@ -468,7 +499,8 @@ class MoveGroupPythonInterfaceTutorial(object):
         ## Removing Objects from the Planning Scene
         ## ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         ## We can remove the box from the world.
-        scene.remove_world_object(box_name)
+        for name in self.box_names:
+            scene.remove_world_object(name)
 
         ## **Note:** The object must be detached before we can remove it from the world
         ## END_SUB_TUTORIAL
@@ -507,7 +539,8 @@ def main():
         #tutorial.execute_plan(cartesian_plan)
 
         print("============ Press `Enter` to add a box to the planning scene ...")
-        tutorial.add_box()
+        tutorial.add_box(0.0, [0.29, -0.14, 0.25])
+        tutorial.add_box(0.0, [0.5, 0.3, 0.1], frame= "world", name="box2")
 
         #print("============ Press `Enter` to attach a Box to the hc10 robot ...")
         #tutorial.attach_box()

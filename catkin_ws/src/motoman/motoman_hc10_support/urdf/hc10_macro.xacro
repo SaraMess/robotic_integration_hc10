@@ -139,7 +139,7 @@
       <inertia ixx="0.03" ixy="0.03" ixz="0.03" iyy="0.0" iyz="0.0" izz="0.0"/>
     </inertial>
     </link>
-    <link name="${prefix}kinect_frame">
+    <link name="kinect_frame">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.1"/>
@@ -207,10 +207,10 @@
       <child link="${prefix}tool0"/>
     </joint>
     <joint type="fixed" name="effector_camera_joint">
-      <origin xyz="0.15 -1 0.1" rpy="0 0 1.57"/>
+      <origin xyz="0 0 0" rpy="1.57079632679  -1.57079632679  0"/>
       <child link="kinect_frame"/>
-      <parent link="tool0"/>
-      <axis xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${prefix}tool0"/>
+      <!--axis xyz="0 0 0" rpy="0 0 0"/-->
       <limit effort="10000" velocity="1000"/>
       <dynamics damping="1.0" friction="1.0"/>
     </joint>

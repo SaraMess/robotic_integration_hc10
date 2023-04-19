@@ -1,10 +1,10 @@
 # robotic_integration_hc10
 
 ## Environment : Virtual Machine
-Ubuntu 20.04
-Ros Noetic + packages moveIt, Ros control, ...
-Visual Studio Code
-Python 3
+Ubuntu 20.04  
+Ros Noetic + packages moveIt, Ros control, ...  
+Visual Studio Code  
+Python 3  
 
 
 ## Prise en main de l'environnement

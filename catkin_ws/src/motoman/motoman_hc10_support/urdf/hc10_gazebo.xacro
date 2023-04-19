@@ -1,10 +1,18 @@
 <?xml version="1.0" ?>
 <robot name="motoman_hc10" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Chargin the robot hc10-->
   <xacro:include filename="$(find motoman_hc10_support)/urdf/hc10_macro.xacro" />
   <xacro:motoman_hc10 prefix=""/>
+
+  <!-- Color Visualization -->
   <xacro:include filename="$(find motoman_hc10_support)/urdf/hc10.gazebo.colors.xacro"/>
   <xacro:hc10_gazebo arm_id="hc10"/>
+
+  <!-- Robot controller hc10 -->
   <xacro:include filename="$(find motoman_hc10_support)/urdf/hc10.control.xacro"/>
   <xacro:hc10_control arm_id="hc10"/>
+
+  <!-- Sensor 3D kinect-->
   <xacro:include filename="$(find motoman_hc10_support)/urdf/kinect_camera.gazebo"/>
 </robot>

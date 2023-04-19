@@ -206,11 +206,11 @@
       <parent link="${prefix}link_6_t"/>
       <child link="${prefix}tool0"/>
     </joint>
+    <!-- Attach Kinect to effector -->
     <joint type="fixed" name="effector_camera_joint">
       <origin xyz="0 0 0" rpy="1.57079632679  -1.57079632679  0"/>
       <child link="kinect_frame"/>
       <parent link="${prefix}tool0"/>
-      <!--axis xyz="0 0 0" rpy="0 0 0"/-->
       <limit effort="10000" velocity="1000"/>
       <dynamics damping="1.0" friction="1.0"/>
     </joint>

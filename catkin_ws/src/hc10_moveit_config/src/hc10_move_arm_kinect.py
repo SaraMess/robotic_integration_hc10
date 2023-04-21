@@ -377,39 +377,9 @@ class MoveGroupPythonInterfaceTutorial(object):
         return False
         ## END_SUB_TUTORIAL
 
-    def add_box(self, timeout=4):
-        # Copy class variables to local variables to make the web tutorials more clear.
-        # In practice, you should use the class variables directly unless you have a good
-        # reason not to.
-        box_name = self.box_name
-        scene = self.scene
-
-        ## BEGIN_SUB_TUTORIAL add_box
-        ##
-        ## Adding Objects to the Planning Scene
-        ## ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        ## First, we will create a box in the planning scene between the fingers:
-        box_pose = geometry_msgs.msg.PoseStamped()
-        box_pose.header.frame_id = "world"
-        box_pose.pose.orientation.w = 0.0
-        box_pose.pose.position.x = 0.29  # above the hc10_hand frame
-        box_pose.pose.position.y = -0.14  # above the hc10_hand frame
-        box_pose.pose.position.z = 0.25  # above the hc10_hand frame
-        box_name = "box"
-        scene.add_box(box_name, box_pose, size=(0.2, 0.2, 0.2))
-
-        ## END_SUB_TUTORIAL
-        # Copy local variables back to class variables. In practice, you should use the class
-        # variables directly unless you have a good reason not to.
-        self.box_name = box_name
-
-        return self.wait_for_state_update(box_is_known=True, timeout=timeout) 
-
     def add_box(self, orientation_w, position, frame= "world", name="box", size=(0.2, 0.2, 0.2), timeout=4):
 
-        # Copy class variables to local variables to make the web tutorials more clear.
-        # In practice, you should use the class variables directly unless you have a good
-        # reason not to.
+        # Modifying the add_box method to add multiple boxes to the simulation
         box_name = self.box_name
         scene = self.scene
 
@@ -515,50 +485,25 @@ def main():
     try:
         print("")
         print("----------------------------------------------------------")
-        print("Welcome to the MoveIt MoveGroup Python Interface Tutorial")
+        print("This script generates a cartesian trajectory to the HC10 robot")
         print("----------------------------------------------------------")
         print("Press Ctrl-D to exit at any time")
         print("")
         print(
-            "============ Press `Enter` to begin the tutorial by setting up the moveit_commander ..."
+            "============ Press `Enter` to run the execution ..."
         )
         tutorial = MoveGroupPythonInterfaceTutorial()
 
-        print("============ Press `Enter` to execute a movement using a joint state goal")
+        print("============ The robot is set on the initial pose ...")
         tutorial.go_to_joint_state()
 
-        
 
-        #print("============ Press `Enter` to plan and display a Cartesian path ...")
-        #cartesian_plan, fraction = tutorial.plan_cartesian_path()
-
-        #print("============ Press `Enter` to display a saved trajectory (this will replay the Cartesian path)")
-        #tutorial.display_trajectory(cartesian_plan)
-
-        #print("============ Press `Enter` to execute a saved path ...")
-        #tutorial.execute_plan(cartesian_plan)
-
-        print("============ Press `Enter` to add a box to the planning scene ...")
+        print("============ Adding the boxes in RViz ...")
         tutorial.add_box(0.0, [0.29, -0.14, 0.25])
         tutorial.add_box(0.0, [0.5, 0.3, 0.1], frame= "world", name="box2")
 
-        #print("============ Press `Enter` to attach a Box to the hc10 robot ...")
-        #tutorial.attach_box()
-
-        #print("============ Press `Enter` to plan and execute a path with an attached collision object")
-        #cartesian_plan, fraction = tutorial.plan_cartesian_path(scale=-1)
-        #tutorial.execute_plan(cartesian_plan)
-
-        #input("============ Press `Enter` to detach the box from the hc10 robot ...")
-        #tutorial.detach_box()
-        print("============ Press `Enter` to execute a movement using a pose goal ...")
+        print("============ Ordering the target position ...")
         tutorial.go_to_pose_goal()
-        
-
-        input(
-            "============ Press `Enter` to remove the box from the planning scene ..."
-        )
-        tutorial.remove_box()
 
         print("============ Python tutorial demo complete!")
     except rospy.ROSInterruptException:

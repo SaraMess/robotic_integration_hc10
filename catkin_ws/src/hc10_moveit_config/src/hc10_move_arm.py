@@ -483,48 +483,23 @@ def main():
     try:
         print("")
         print("----------------------------------------------------------")
-        print("Welcome to the MoveIt MoveGroup Python Interface Tutorial")
+        print("The following script generates a cartesian trajectory to the HC 10 robot")
         print("----------------------------------------------------------")
         print("Press Ctrl-D to exit at any time")
         print("")
-        print(
-            "============ Press `Enter` to begin the tutorial by setting up the moveit_commander ..."
-        )
+        print("============ Press `Enter` to run the execution ...")
         tutorial = MoveGroupPythonInterfaceTutorial()
 
-        print("============ Press `Enter` to execute a movement using a joint state goal")
+        print("============ Robot set on the initial pose ...")
         tutorial.go_to_joint_state()
 
-        
-
-        #print("============ Press `Enter` to plan and display a Cartesian path ...")
-        #cartesian_plan, fraction = tutorial.plan_cartesian_path()
-
-        #print("============ Press `Enter` to display a saved trajectory (this will replay the Cartesian path)")
-        #tutorial.display_trajectory(cartesian_plan)
-
-        #print("============ Press `Enter` to execute a saved path ...")
-        #tutorial.execute_plan(cartesian_plan)
-
-        print("============ Press `Enter` to add a box to the planning scene ...")
+        print("============ Adding a box in RViz ...")
         tutorial.add_box()
 
-        #print("============ Press `Enter` to attach a Box to the hc10 robot ...")
-        #tutorial.attach_box()
-
-        #print("============ Press `Enter` to plan and execute a path with an attached collision object")
-        #cartesian_plan, fraction = tutorial.plan_cartesian_path(scale=-1)
-        #tutorial.execute_plan(cartesian_plan)
-
-        #input("============ Press `Enter` to detach the box from the hc10 robot ...")
-        #tutorial.detach_box()
-        print("============ Press `Enter` to execute a movement using a pose goal ...")
+        print("============ Robot set on the target pose ...")
         tutorial.go_to_pose_goal()
         
-
-        input(
-            "============ Press `Enter` to remove the box from the planning scene ..."
-        )
+        input("============ Press `Enter` to remove the box from the planning scene ...")
         tutorial.remove_box()
 
         print("============ Python tutorial demo complete!")
